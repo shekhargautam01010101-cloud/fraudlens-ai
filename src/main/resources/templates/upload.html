@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FraudLens AI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background: #f4f6f8; }
+        h1 { color: #1f4e78; }
+        .box { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        table { border-collapse: collapse; width: 100%; background: white; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #1f4e78; color: white; }
+        .msg { color: #1a7f37; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>FraudLens AI</h1>
+
+    <div class="box">
+        <h3>Upload transactions (CSV)</h3>
+        <form method="post" action="/upload" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv">
+            <button type="submit">Upload</button>
+        </form>
+        <p class="msg" th:if="${message}" th:text="${message}"></p>
+    </div>
+
+    <h3>Transactions (<span th:text="${#lists.size(transactions)}">0</span>)</h3>
+    <table>
+        <tr>
+            <th>ID</th><th>Sender</th><th>Beneficiary</th><th>Amount</th>
+            <th>Time</th><th>Device</th><th>Location</th>
+        </tr>
+        <tr th:each="t : ${transactions}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.sender}"></td>
+            <td th:text="${t.beneficiary}"></td>
+            <td th:text="${t.amount}"></td>
+            <td th:text="${t.txnTime}"></td>
+            <td th:text="${t.device}"></td>
+            <td th:text="${t.location}"></td>
+        </tr>
+    </table>
+</body>
+</html>
